@@ -54,4 +54,4 @@
 > Example case 3. After removing the 1 largest and smallest measurements, Sergey will be left with only one measurement, i.e. 1. Average of this is 1 itself.
 
 DISCLAIMER:
-All information and content contained in here are provided solely for general information and reference purposes. Unless otherwise stated, the above problem statements is owned by CodeChef. www.codechef.com
+All information and content contained in here are provided solely for general information and reference purposes. Unless otherwise stated, the above problem statement is owned by CodeChef. www.codechef.com
