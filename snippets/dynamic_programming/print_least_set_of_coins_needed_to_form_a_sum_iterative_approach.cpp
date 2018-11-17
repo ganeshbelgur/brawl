@@ -3,9 +3,19 @@ using namespace std;
 #define INF 2147483646
 #define MAX 10000
 
-int first[MAX] = {0};
+
+/*
+ * Problem:
+ * Given a set of coins, print the coins required to form the optimal 
+ * solution which is the least number of coins required to form a 
+ * sum N using iterative dynamic programming approach.
+ * 
+ */
+
+
+int first[MAX];
+int value[MAX];
 int coins[3] = {1, 3, 4};
-int value[MAX] = {0};
 
 void construction()
 {

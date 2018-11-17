@@ -3,18 +3,21 @@ using namespace std;
 #define INF 2147483646
 #define MAX 10000
 
+
 /*
  * Problem:
  * Given a set of coins, find the least number of coins required to 
- * form a sum N.
+ * form a sum N using a recursive dynamic programming approach.
  * 
  * Note:
  * Using a greedy approach does not work in all cases, that's when dynamic
  * programming steps in. This solutions also shows the concept of memoization.
  */
+
+
+int value[MAX];
+bool ready[MAX];
 int coins[3] = {1, 3, 4};
-bool ready[MAX] = {false};
-int value[MAX] = {0};
 
 int solve_coins(int x)
 {

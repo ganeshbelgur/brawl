@@ -3,17 +3,23 @@ using namespace std;
 #define INF 2147483646
 #define MAX 10000
 
+
 /*
  * Problem:
  * Given a set of coins, find the least number of coins required to 
- * form a sum N.
+ * form a sum N using iterative dynamic programming approach.
  * 
  * Note:
- * Using a greedy approach does not work in all cases, that's when dynamic
- * programming steps in. This solutions also shows the concept of memoization.
+ * The iterative form of a recursive dynamic algorithm generally has
+ * better constant factors in its time complexity which makes it a 
+ * slightly faster solution and easier to implement. However, it is
+ * easier to come up with a recursive dynamic programming solution first
+ * and then convert it to an iterative solution.
  */
+
+
+int value[MAX];
 int coins[3] = {1, 3, 4};
-int value[MAX] = {0};
 
 int construction()
 {
