@@ -34,11 +34,12 @@ project(
 cpp = meson.get_compiler('cpp')
 
 project_test_files = [
-  'sources/leetcode/2-add-two-numbers.cpp',
-  'sources/leetcode/3-longest-substring-without-repeating-characters.cpp',
+  'solutions/leetcode/2-add-two-numbers.cpp',
+  'solutions/leetcode/3-longest-substring-without-repeating-characters.cpp',
+  'solutions/codechef/TSORT.cpp',
 ]
 
-gtest_dir = 'googletest/googletest'
+gtest_dir = 'util/googletest/googletest'
 gtest_incdir = include_directories(join_paths(gtest_dir, 'include'), is_system : true)
 
 libgtest = static_library(
@@ -51,7 +52,23 @@ libgtest = static_library(
   ]
 )
 
-test_dep = declare_dependency(
+gtest_stdio_compare_dir = 'util'
+
+libgtest_stdio_compare = static_library(
+  'gtest_stdio_compare',
+  cpp_args : ['-w'],
+  include_directories: [gtest_stdio_compare_dir, include_directories(gtest_dir), gtest_incdir],
+  sources : [
+    join_paths(gtest_stdio_compare_dir, 'gtest_stdio_compare.cpp')
+  ]
+)
+
+test_gtest_stdio_compare_dep = declare_dependency(
+  include_directories : gtest_stdio_compare_dir,
+  link_with : libgtest_stdio_compare
+)
+
+test_gtest_dep = declare_dependency(
   dependencies : dependency('threads'),
   include_directories : gtest_incdir,
   link_with : libgtest
@@ -60,11 +77,28 @@ test_dep = declare_dependency(
 # Unit tests
 add_languages('cpp', native: false)
 
-test('all_tests',
-  executable(
-    'brawls',
-    files(project_test_files),
-    dependencies : [test_dep],
-    install : false
+fs = import('fs')
+
+foreach source_files : project_test_files
+  test_file = fs.stem(source_files)
+  is_leetcode = source_files.contains('leetcode')
+  is_codechef = source_files.contains('codechef')
+  deps = [test_gtest_dep]
+
+  if is_leetcode
+    test_folder = 'leetcode'
+  elif is_codechef
+    test_folder = 'codechef'
+    deps += [test_gtest_stdio_compare_dep]
+  endif
+
+  test(test_folder + '_' + test_file,
+    executable(
+      'brawl_' + test_folder + '_' + test_file,
+      files(source_files),
+      dependencies : [deps],
+      install : false
+    )
   )
-)
+endforeach
+
